@@ -10,8 +10,9 @@ using Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController : Controller
+    public class ProductsController : ControllerBase
     {
         private IProductService _productService;
 
