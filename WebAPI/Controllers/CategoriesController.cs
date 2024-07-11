@@ -5,8 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Business.Abstract;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,13 +12,13 @@ namespace WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
-        private IProductService _productService;
+        private ICategoryService _categoryService;
 
-        public ProductsController(IProductService productService)
+        public CategoriesController(ICategoryService categoryService)
         {
-            _productService = productService;
+            _categoryService = categoryService;
         }
 
         // GET api/values/5
@@ -30,13 +28,13 @@ namespace WebAPI.Controllers
             return "value";
         }
 
-        [HttpGet(template:"getall")]
-        [Authorize(Roles = "Product.List")]
+        [HttpGet(template: "getall")]
         public IActionResult GetList()
         {
-            var result = _productService.GetList();
+            Console.WriteLine("I was called succesfully");
+            var result = _categoryService.GetList();
 
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result.Data);
             }
@@ -44,12 +42,11 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet(template:"getlistbycategory")]
-        public IActionResult GetListByCategory(int categoryId)
+        [HttpGet(template: "getbyid")]
+        public IActionResult GetById(int categoryId)
         {
-            var result = _productService.GetListByCategory(categoryId);
-
-            if(result.Success)
+            var result = _categoryService.GetById(categoryId);
+            if (result.Success)
             {
                 return Ok(result.Data);
             }
@@ -57,24 +54,12 @@ namespace WebAPI.Controllers
             return BadRequest(result.Message);
         }
 
-        [HttpGet(template:"getbyid")]
-        public IActionResult GetById(int productId)
+        [HttpPost(template: "add")]
+        public IActionResult Add(Category category)
         {
-            var result = _productService.GetById(productId);
-            if(result.Success)
-            {
-                return Ok(result.Data);
-            }
+            var result = _categoryService.Add(category);
 
-            return BadRequest(result.Message);
-        }
-
-        [HttpPost(template:"add")]
-        public IActionResult Add(Product product)
-        {
-            var result = _productService.Add(product);
-
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result.Message);
             }
@@ -83,9 +68,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost(template: "update")]
-        public IActionResult Update(Product product)
+        public IActionResult Update(Category category)
         {
-            var result = _productService.Update(product);
+            var result = _categoryService.Update(category);
 
             if (result.Success)
             {
@@ -96,9 +81,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost(template: "delete")]
-        public IActionResult Delete(Product product)
+        public IActionResult Delete(Category category)
         {
-            var result = _productService.Delete(product);
+            var result = _categoryService.Delete(category);
 
             if (result.Success)
             {
@@ -110,13 +95,13 @@ namespace WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody] string value)
         {
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody] string value)
         {
         }
 
