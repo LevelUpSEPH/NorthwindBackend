@@ -6,7 +6,11 @@ using Entities.Concrete;
 using DataAccess.Abstract;
 using Core.Utilities.Results;
 using Business.Constants;
-
+using Core.CrossCuttingConcerns.Validation.FluentValidation;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.Aspects.Autofac.Transaction;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete
 {
@@ -29,11 +33,14 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetList().ToList());
         }
 
+        [CacheAspect(duration:1)]
         public IDataResult<List<Product>> GetListByCategory(int categoryId)
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetList(filter: p => p.CategoryId == categoryId).ToList());
         }
 
+        [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect(pattern:"IProductService.Get")]
         public IResult Add(Product product)
         {
             _productDal.Add(product);
@@ -50,6 +57,15 @@ namespace Business.Concrete
         {
             _productDal.Update(product);
             return new SuccessResult(message: Messages.ProductUpdated);
+        }
+
+        [TransactionScopeAspect]
+        public IResult TransactionalOperation(Product product)
+        {
+            _productDal.Update(product);
+            _productDal.Add(product);
+
+            return new SuccessResult(Messages.ProductAdded);
         }
     }
 }

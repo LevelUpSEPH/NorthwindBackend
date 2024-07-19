@@ -10,6 +10,8 @@
     <None Remove="Constants\" />
     <None Remove="DependencyResolvers\" />
     <None Remove="DependencyResolvers\AutoFac\" />
+    <None Remove="ValidationRules\" />
+    <None Remove="ValidationRules\FluentValidation\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstract\" />
@@ -17,6 +19,8 @@
     <Folder Include="Constants\" />
     <Folder Include="DependencyResolvers\" />
     <Folder Include="DependencyResolvers\AutoFac\" />
+    <Folder Include="ValidationRules\" />
+    <Folder Include="ValidationRules\FluentValidation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
@@ -24,5 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="FluentValidation" Version="8.5.0" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
   </ItemGroup>
 </Project>

@@ -4,8 +4,10 @@ using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete;
 using Core.Utilities.Security.Jwt;
+using Castle.DynamicProxy;
+using Autofac.Extras.DynamicProxy;
+using Core.Utilities.Interceptors;
 
 namespace Business.DependencyResolvers.AutoFac
 {
@@ -23,6 +25,13 @@ namespace Business.DependencyResolvers.AutoFac
             builder.RegisterType<EfProductDal>().As<IProductDal>();
             builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+                {
+                    Selector = new AspectInterceptorSelector()
+                }).SingleInstance();
         }
     }
 }
