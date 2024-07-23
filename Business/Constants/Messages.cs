@@ -27,6 +27,8 @@ namespace Business.Constants
 		public static string UserRegistered = "User successfully registered";
 
 		public static string AccessTokenCreated = "Access token created";
+
+		public static string AuthorizationDenied = "Authorization Denied";
     }
 }
 

@@ -12,6 +12,8 @@
     <None Remove="DependencyResolvers\AutoFac\" />
     <None Remove="ValidationRules\" />
     <None Remove="ValidationRules\FluentValidation\" />
+    <None Remove="BusinessAspects\" />
+    <None Remove="BusinessAspects\Autofac\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Abstract\" />
@@ -21,6 +23,8 @@
     <Folder Include="DependencyResolvers\AutoFac\" />
     <Folder Include="ValidationRules\" />
     <Folder Include="ValidationRules\FluentValidation\" />
+    <Folder Include="BusinessAspects\" />
+    <Folder Include="BusinessAspects\Autofac\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
@@ -30,5 +34,6 @@
     <PackageReference Include="Autofac" Version="4.9.4" />
     <PackageReference Include="FluentValidation" Version="8.5.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 </Project>

@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Business.Abstract;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using Core.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,9 +30,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet(template:"getall")]
-        [Authorize(Roles = "Product.List")]
         public IActionResult GetList()
         {
+            User.ClaimRoles();
             var result = _productService.GetList();
 
             if(result.Success)

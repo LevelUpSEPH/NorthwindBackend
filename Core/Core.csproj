@@ -30,6 +30,12 @@
     <None Remove="CrossCuttingConcerns\Caching\" />
     <None Remove="CrossCuttingConcerns\Caching\Microsoft\" />
     <None Remove="Aspects\Autofac\Caching\" />
+    <None Remove="Aspects\Autofac\Performance\" />
+    <None Remove="CrossCuttingConcerns\Logging\" />
+    <None Remove="CrossCuttingConcerns\Logging\Log4Net\" />
+    <None Remove="CrossCuttingConcerns\Logging\Log4Net\Layouts\" />
+    <None Remove="CrossCuttingConcerns\Logging\Log4Net\Loggers\" />
+    <None Remove="Aspects\Autofac\Logging\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -57,6 +63,12 @@
     <Folder Include="CrossCuttingConcerns\Caching\" />
     <Folder Include="CrossCuttingConcerns\Caching\Microsoft\" />
     <Folder Include="Aspects\Autofac\Caching\" />
+    <Folder Include="Aspects\Autofac\Performance\" />
+    <Folder Include="CrossCuttingConcerns\Logging\" />
+    <Folder Include="CrossCuttingConcerns\Logging\Log4Net\" />
+    <Folder Include="CrossCuttingConcerns\Logging\Log4Net\Layouts\" />
+    <Folder Include="CrossCuttingConcerns\Logging\Log4Net\Loggers\" />
+    <Folder Include="Aspects\Autofac\Logging\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
@@ -65,5 +77,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.2" />
     <PackageReference Include="FluentValidation" Version="8.5.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="log4net" Version="2.0.5" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>
