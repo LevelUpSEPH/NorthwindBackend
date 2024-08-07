@@ -11,9 +11,8 @@ namespace Core.CrossCuttingConcerns.Validation.FluentValidation
 			var result = validator.Validate(entity);
 			if(!result.IsValid)
 			{
-				throw new ValidationException(result.Errors);
+ 				throw new ValidationException(result.Errors);
 			}
 		}
 	}
 }
-

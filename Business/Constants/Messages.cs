@@ -29,6 +29,8 @@ namespace Business.Constants
 		public static string AccessTokenCreated = "Access token created";
 
 		public static string AuthorizationDenied = "Authorization Denied";
+
+		public static string ProductNameAlreadyExists = "Product name already exists";
     }
 }
 

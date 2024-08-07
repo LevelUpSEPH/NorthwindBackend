@@ -15,6 +15,8 @@ using Business.BusinessAspects.Autofac;
 using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
+using Core.Utilities.Business;
+using Core.Aspects.Autofac.Exception;
 
 namespace Business.Concrete
 {
@@ -40,7 +42,7 @@ namespace Business.Concrete
         [PerformanceAspect(5)]
         //[SecuredOperation("Product.List, Admin")]
         [CacheAspect(duration:1)]
-        [LogAspect(typeof(DatabaseLogger))]
+        [LogAspect(typeof(FileLogger))]
         public IDataResult<List<Product>> GetListByCategory(int categoryId)
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetList(filter: p => p.CategoryId == categoryId).ToList());
@@ -50,8 +52,25 @@ namespace Business.Concrete
         [CacheRemoveAspect(pattern:"IProductService.Get")]
         public IResult Add(Product product)
         {
+            IResult result = BusinessRules.Run(logics: CheckIfProductNameExists(product.ProductName));
+
+            if(result != null)
+            {
+                return result;
+            }
+
             _productDal.Add(product);
             return new SuccessResult(message: Messages.ProductAdded);
+        }
+
+        private IResult CheckIfProductNameExists(string productName)
+        {
+            if (_productDal.Get(filter: p => p.ProductName == productName) != null)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+
+            return new SuccessResult();
         }
 
         public IResult Delete(Product product)
