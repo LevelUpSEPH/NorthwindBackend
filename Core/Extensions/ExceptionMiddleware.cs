@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
 namespace Core.Extensions
@@ -30,12 +31,19 @@ namespace Core.Extensions
         {
 			httpContext.Response.ContentType = "application/json";
 			httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-			
+
+			string message = "Internal Server Error";
+
+			if(e.GetType() == typeof(ValidationException))
+			{
+				message = e.Message;
+			}
+
 			return httpContext.Response.WriteAsync(new ErrorDetails
 			{
 				StatusCode = httpContext.Response.StatusCode,
-				Message = "Internal Server Error"
-			}.ToString());
+				Message = message
+            }.ToString());
         }
     }
 }
